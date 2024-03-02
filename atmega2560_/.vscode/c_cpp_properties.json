@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "AVR-GNU/LINUX",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/avr-gcc",
+            "cStandard": "c11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerArgs": [
+                "-Os"
+            ]
+        }
+    ],
+    "version": 4
+}

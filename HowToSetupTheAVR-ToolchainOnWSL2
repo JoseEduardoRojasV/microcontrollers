@@ -1,0 +1,72 @@
+
+You need to install the toolchain to program AVR microcontroladors.
+
+$ sudo apt install avrdude avrdude-doc binutils-avr \ 
+                   make gcc-avr avr-libc gdb-avr
+
+    make -v
+    avr-gcc --version
+    avrdude -v
+
+    To privar la cadena de herramientas 
+
+    #define F_CPU 16000000UL
+
+    #include <avr/io.h>
+    #include <util/delay.h>
+
+    int main(void)
+    { 
+        DDRB |=  1 << PB7;
+        while(true)
+        {
+            _delay_ms(1000);
+            PORTB ^= 1 << PINB7;
+            _delay_ms(1000);
+        }
+        return 0;
+    }
+
+[https://www.tonymitchell.ca/posts/setup-avr-toolchain-on-wsl/]
+
+##############################################
+ Connecting an AVR board on Linux
+
+    You have to change the permisitions of device.
+ $ ls -l /dev | grep ttyUSB0
+ crwx------  1 root    dialout 188,     0 jul 23 12:35 ttyUSB0
+ $ sudo chmod 777 /dev/ttyUSB0
+  crwxrwxrwx  1 root    dialout 188,     0 jul 23 12:39 ttyUSB0
+  Now, you can use it!
+  Link to donwload the toolchain for AVR
+
+  https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers#
+  wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-3.7.0.1796-linux.any.x86_64.tar.gz
+
+##############################################
+
+echo "Instalacion de la cadena de herramientas para AVR [Atmel]"
+
+echo "Instalación del paquete binutils-avr"
+	sudo apt install binutils-avr -y
+echo "Instalación del paquete gcc-avr"
+	sudo apt install gcc-avr -y
+echo "Instalación del paquete avr-libc"
+	sudo apt install avr-libc -y
+echo "Instalación del paquete gdb-avr"
+	sudo apt install gdb-avr -y
+echo "Instalación del paquete avrdude"
+	sudo apt install avrdude -y
+
+
+
+
+AVR Programming
+Learning to Write Software for Hardware
+Elliot Williams
+
+Programming with STM32: Getting Started with the Nucleo Board and C/C++
+star rating fillstar rating fillstar rating fillstar rating outlinestar rating outline
+
+1 review
+By Donald Norris

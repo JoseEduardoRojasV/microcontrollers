@@ -1,0 +1,86 @@
+#Referencias
+# https://www.nongnu.org/avrdude/user-manual/avrdude_1.html#Introduction
+
+echo "################################*"
+
+##EXEC=/home/eduardo/VSCode/AtmelMega2560/AVRLibc/Blink/blink.ino.hex
+
+##avrdude -C /etc/avrdude.conf -v -p atmega2560 -c wiring -P /dev/ttyUSB0 -b 115200 -D -U flash:w:$EXEC:i
+
+
+
+
+#Main application file name
+MAIN_APP = blink
+#Main hex file path in windows format
+MAIN_HEX_PATH = /home/eduardo/VSCode/AtmelMega2560/AVRLibc/Blink/$(MAIN_APP).ino.hex
+
+#F_CPU = 16000000UL
+
+## Compiler and other Section
+#GCC = avr-gcc
+#OBJCOPY = avr-objcopy.exe
+
+biuld:
+
+load: avrdude $(AVRDUDEFLAGS)
+
+#Options for avrdude to burn the hex file MCU model here according to avrdude options
+AVRDUDEFLAGS  = -C /etc/avrdude.conf
+AVRDUDEFLAGS += -v
+AVRDUDEFLAGS += -p atmega2560
+AVRDUDEFLAGS += -c wiring
+AVRDUDEFLAGS += -P /dev/ttyUSB0
+AVRDUDEFLAGS += -b 115200 
+AVRDUDEFLAGS += -D
+AVRDUDEFLAGS += -U flash:w:$(MAIN_HEX_PATH):i
+
+clean:
+
+##Options for avr-gcc
+#CFLAGS = -g -Os -o
+
+##Linking options for avr-gcc
+#LFLAGS = -Os -mmcu=atmega8 -o
+
+##Options for HEX file generation
+#HFLAGS = -j .text -j .data -O ihex
+
+## Sources files needed for building the application 
+#SRC = $(MAIN_APP).c
+#SRC += 
+
+## The headers files needed for building the application
+#INCLUDE = -I. 
+#INCLUDE += 
+
+#echo "*** Compilacion y carga del programa en la placa ***"
+
+#Options for avrdude to burn the hex file MCU model here according to avrdude options
+AVRDUDEFLAGS  = -C /etc/avrdude.conf
+AVRDUDEFLAGS += -v
+AVRDUDEFLAGS += -p atmega2560
+AVRDUDEFLAGS += -c wiring
+AVRDUDEFLAGS += -P /dev/ttyUSB0
+AVRDUDEFLAGS += -b 115200 
+AVRDUDEFLAGS += -D
+AVRDUDEFLAGS += -U flash:w:$(MAIN_HEX_PATH):i
+
+# commands Section
+#Burn : Build
+Burn : $(AVRDUDE) $(AVRDUDEFLAGS)
+
+#Build : $(MAIN_APP).elf
+#	$(OBJCOPY) $(HFLAGS) $< $(MAIN_APP).hex
+
+
+#Opcinoes para compilador [https://www-nongnu-org.translate.goog/avr-libc/user-manual/using_tools.html?_x_tr_sl=auto&_x_tr_tl=es&_x_tr_hl=es-419]
+GCCDUDEFLAGS  = -mmcu=atmega2560
+GCCDUDEFLAGS +=
+
+
+#$(MAIN_APP).elf: $(MAIN_APP).o
+#	$(GCC) $(SRC) $(INCLUDE) $(LFLAGS) $@
+	
+#$(MAIN_APP).o:$(SRC)
+#	$(GCC) $^ $(INCLUDE) $(CFLAGS) $@
