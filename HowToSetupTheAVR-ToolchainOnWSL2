@@ -1,8 +1,7 @@
 
 You need to install the toolchain to program AVR microcontroladors.
 
-$ sudo apt install avrdude avrdude-doc binutils-avr \ 
-                   make gcc-avr avr-libc gdb-avr
+$ sudo apt install avrdude avrdude-doc binutils-avr make gcc-avr avr-libc gdb-avr
 
     make -v
     avr-gcc --version

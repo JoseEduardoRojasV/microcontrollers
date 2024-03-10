@@ -8,13 +8,15 @@ PROGRAM_NAME := blink
 
 # To load program to board
 
-CPU        := atmega2560
-PORT       := /dev/ttyUSB0
-BAUD_RATE  := 115200
-EXECUTABLE := $(PROGRAM_NAME).hex
+MCU         := -p atmega2560
+PROGRAMMER  := -c wiring
+PORT        := -p /dev/ttyUSB0
+BAUDRATE    := -b 115200
+CONFIG_FILE := -C /etc/avrdude.conf
+EXECUTABLE  := $(PROGRAM_NAME).hex
 
 flash: $(EXECUTABLE)
-	avrdude -C /etc/avrdude.conf -v -p $(CPU) -c wiring -P $(PORT) -b $(BAUD_RATE) -D -U flash:w:$<:i
+	avrdude  $(MCU) $(PROGRAMMER) $(PORT) $(BAUDRATE) $(CONFIG_FILE) -v -D -U flash:w:$<:i
 
 #.PHONY : clean
 #clean
