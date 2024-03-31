@@ -8,48 +8,33 @@ protected:
     
     struct ControlRegister { // SPI Control Register
 
-    uint8_t SPIE : 1; // SPI Interrupt Enable
-    uint8_t SPE  : 1; // SPI Enable
-    uint8_t DORD : 1; // Data Order
-    uint8_t MSTR : 1; // Master/Slave Select
-    uint8_t CPOL : 1; // Clock Polarity
-    uint8_t CPHA : 1; // Clock Phase
-    uint8_t SPR1 : 1; // SPI Clock Rate Select 1 and 0
-    uint8_t SPR0 : 1; // SPI Clock Rate Select 1 and 0
+    uint8_t spie : 1; // SPI Interrupt Enable
+    uint8_t spe  : 1; // SPI Enable
+    uint8_t dord : 1; // Data Order
+    uint8_t mstr : 1; // Master/Slave Select
+    uint8_t cpol : 1; // Clock Polarity
+    uint8_t cpha : 1; // Clock Phase
+    uint8_t spr1 : 1; // SPI Clock Rate Select 1 and 0
+    uint8_t spr0 : 1; // SPI Clock Rate Select 1 and 0
     
-    ControlRegister() : SPIE(false), SPE(true), DORD(false), 
-    MSTR(false), CPOL(false), CPHA(false), SPR1(false), SPR0(false) { }
+    ControlRegister()
     } spcr;
 
 public:
+    
+    SPI()
+    ~SPI()
 
-    SPI() : spcr() {}
+    inline isLSBfirstEnabled() const { return spcr.dord;  }
+    inline isMSBfirstEnabled() const { return !spcr.dord; }
 
-    void enableInterrupt() { spcr.SPIE = true   }
-    void sendLSBfirst()    { spcr.DORD = true;  }
-    void sendMSBfirst()    { spcr.DORD = false; }
+    void sendLSBfirst()
+    void sendMSBfirst()
+    void applyChanges()
 
-    ~SPI(){ }
-};
+    void startTransmission(const & uint8_t data, uint8_t length)
 
-class Master : public SPI {
 
-    Master() : SPI() {
-        SPCR.MSTR = true;
-    }
-
-    void enableMode1() { spcr.CPOL = false; spcr.CPHA = false; }
-    void enableMode2() { spcr.CPOL = false; spcr.CPHA = true;  }
-    void enableMode3() { spcr.CPOL = true;  spcr.CPHA = false; }
-    void enableMode4() { spcr.CPOL = true;  spcr.CPHA = true;  }
-
-};
-
-class Slave : public SPI {
-
-    Slave() : SPI() {
-    spcr.MSTR = false;
-    }
 };
 
 struct StatusRegister // SPI Status Register

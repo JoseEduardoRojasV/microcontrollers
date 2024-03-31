@@ -1,0 +1,59 @@
+
+### Flags for compiler
+APP      := blink
+MICRO    := atmega2560
+CFLAGS   := -Os -g -std=gnu++11 -Wall -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -mmcu=$(MICRO) -pedantic
+#"-Os" Will avoid optimization warnings re: _delay
+COMPILER := avr-g++
+
+LIBS     :=
+
+### Directories struct
+SRC        := src
+OBJ        := obj
+SRC_SUBDIRECTORIES := $(shell find $(SRC)/ -type d)
+OBJ_SUBDIRECTORIES := $(patsubst $(SRC)%,$(OBJ)%,$(SRC_SUBDIRECTORIES))
+
+ALL_CPP_FILES := $(shell find src/ -type f -iname *.cpp)
+ALL_OBJ_FILES := $(patsubst %.cpp,%.o,$(ALL_CPP_FILES))
+
+.PHONY: directories clean
+
+
+$(APP).hex : $(APP).elf 
+	avr-objcopy $^ -O ihex $@
+
+#To linking
+$(APP).elf : $(OBJ_SUBDIRECTORIES) $(ALL_OBJ_FILES)
+	$(COMPILER) -mmcu=$(MICRO) $(patsubst $(SRC)%,$(OBJ)%,$(ALL_OBJ_FILES)) $(LIBS) -o $@
+
+$(OBJ_SUBDIRECTORIES) :
+	mkdir -p $(OBJ_SUBDIRECTORIES)
+
+#To compiling
+%.o : %.cpp
+	$(COMPILER) -o $(patsubst $(SRC)%,$(OBJ)%,$@)  -c $^ $(CFLAGS)
+
+ #-Wno-binary-constants
+
+#avr-g++ -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -flto -w -x c++ -E -CC -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR -I../ArduinoCore-avr/cores/arduino -I../ArduinoCore-avr/variants/mega ../sketch/sketch_mar10a.ino.cpp -o nul
+
+#avr-g++ -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -flto -w -x c++ -E -CC -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR -I../ArduinoCore-avr/cores/arduino -I../ArduinoCore-avr/variants/mega -I../ArduinoCore-avr/libraries/SoftwareSerial/src ../sketch/sketch_mar10a.ino.cpp -o nul
+
+#avr-g++ -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -flto -w -x c++ -E -CC -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR -I../ArduinoCore-avr/cores/arduino -I../ArduinoCore-avr/variants/mega -I../ArduinoCore-avr/libraries/SoftwareSerial/src ../sketch/sketch_mar10a.ino.cpp -o ../sketch/sketch_merged/sketch_merged.cpp
+
+#ctags -u --language-force=c++ -f - --c++-kinds=svpf --fields=KSTtzns --line-directives ../sketch/sketch_merged/sketch_merged.cpp
+
+#avr-g++ -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR  "-I../ArduinoCore-avr/cores/arduino" "-I../ArduinoCore-avr/variants/mega" "-I../ArduinoCore-avr/libraries/SoftwareSerial/src" "../sketch/sketch_mar10a.ino.cpp" -o "sketch/sketch_mar10a.ino.cpp.o"
+
+# To load program to board
+
+MCU         := -p $(MICRO)
+PROGRAMMER  := -c wiring
+PORT        := -p /dev/ttyUSB0
+BAUDRATE    := -b 115200
+CONFIG_FILE := -C /etc/avrdude.conf
+EXECUTABLE  := $(APP).hex
+
+flash: $(EXECUTABLE)
+	avrdude  $(MCU) $(PROGRAMMER) $(PORT) $(BAUDRATE) $(CONFIG_FILE) -v -D -U flash:w:$<:i
