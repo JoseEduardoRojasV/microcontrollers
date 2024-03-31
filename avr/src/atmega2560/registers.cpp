@@ -1,8 +1,38 @@
 #include "registers.h"
 
-Register::Register(Address add) : value(0), address(add)
+PortX::PortX(Address add) : address(add)
 {
-    
+
+}
+
+void PortX::readRegister()
+{
+    port.allBits = *address;
+}
+
+void PortX::wirteRegister()
+{
+    *address = port.allBits;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Register::Register(Address add) : value(0), ptrBits(0), address(add)
+{
 }
 
 void Register::readRegister()
@@ -13,6 +43,12 @@ void Register::readRegister()
 void Register::wirteRegister()
 {
     *address = value;
+}
+
+Port::Port(Address add) : Register(add)
+{
+    //port.data = &value;
+    Register::ptrBits = &port.data;
 }
 
 namespace SPI

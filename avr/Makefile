@@ -36,21 +36,11 @@ $(OBJ_SUBDIRECTORIES) :
 
  #-Wno-binary-constants
 
-#avr-g++ -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -flto -w -x c++ -E -CC -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR -I../ArduinoCore-avr/cores/arduino -I../ArduinoCore-avr/variants/mega ../sketch/sketch_mar10a.ino.cpp -o nul
-
-#avr-g++ -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -flto -w -x c++ -E -CC -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR -I../ArduinoCore-avr/cores/arduino -I../ArduinoCore-avr/variants/mega -I../ArduinoCore-avr/libraries/SoftwareSerial/src ../sketch/sketch_mar10a.ino.cpp -o nul
-
-#avr-g++ -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -flto -w -x c++ -E -CC -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR -I../ArduinoCore-avr/cores/arduino -I../ArduinoCore-avr/variants/mega -I../ArduinoCore-avr/libraries/SoftwareSerial/src ../sketch/sketch_mar10a.ino.cpp -o ../sketch/sketch_merged/sketch_merged.cpp
-
-#ctags -u --language-force=c++ -f - --c++-kinds=svpf --fields=KSTtzns --line-directives ../sketch/sketch_merged/sketch_merged.cpp
-
-#avr-g++ -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR  "-I../ArduinoCore-avr/cores/arduino" "-I../ArduinoCore-avr/variants/mega" "-I../ArduinoCore-avr/libraries/SoftwareSerial/src" "../sketch/sketch_mar10a.ino.cpp" -o "sketch/sketch_mar10a.ino.cpp.o"
-
 # To load program to board
 
 MCU         := -p $(MICRO)
 PROGRAMMER  := -c wiring
-PORT        := -p /dev/ttyUSB0
+PORT        := -P /dev/ttyUSB0
 BAUDRATE    := -b 115200
 CONFIG_FILE := -C /etc/avrdude.conf
 EXECUTABLE  := $(APP).hex

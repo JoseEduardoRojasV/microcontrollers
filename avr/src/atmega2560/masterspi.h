@@ -17,17 +17,6 @@ When the SPI is enabled as a slave, this pin is configured as an input regardles
 When the SPI is enabled as a master, the data direction of this pin is controlled by DDB0.
 */
 
-// There are four combinations of SCK phase and polarity with respect to serial data.
-const uint8_t MODE_ZERO{0};  // CPOL=0, CPHA=0
-const uint8_t MODE_ONE{1};   // CPOL=0, CPHA=1
-const uint8_t MODE_TWO{2};   // CPOL=1, CPHA=0
-const uint8_t MODE_THREE{3}; // CPOL=1, CPHA=1
-// SPI Clock Rate
-const uint8_t DIVIDE_CLOCK_BY4{0};
-const uint8_t DIVIDE_CLOCK_BY16{1};
-const uint8_t DIVIDE_CLOCK_BY64{2};
-const uint8_t DIVIDE_CLOCK_BY128{3};
-
 class Master : public CSPI
 {
 public:
