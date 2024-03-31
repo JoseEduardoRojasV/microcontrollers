@@ -29,6 +29,9 @@ $ sudo apt install avrdude avrdude-doc binutils-avr make gcc-avr avr-libc gdb-av
 [https://www.tonymitchell.ca/posts/setup-avr-toolchain-on-wsl/]
 
 ##############################################
+
+If wsl2 has a problem with usbipd  ejecutar el siguiente comando en cdm win > server Logging:LogLevel:Default=Trace
+
  Connecting an AVR board on Linux
 
     You have to change the permisitions of device.
